@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BoxDestroyer : MonoBehaviour
+{
+
+    public GameObject Box;
+
+    
+    public void BoxPop()
+    {
+        Box.gameObject.SetActive(false);
+    }
+    
+  
+
+  
+}
