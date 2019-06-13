@@ -1,0 +1,139 @@
+
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class AlertViewOptions
+{
+    public string cancelButtonTitle;
+
+    public System.Action cancelButtonDelegate;
+
+    public string okButtonTitle;
+
+    public System.Action okButtonDelegate;
+}
+
+public class AlertViewController : MonoBehaviour {
+
+    public Text titleLabel;
+
+    public Text messageLabel;
+
+    public Button cancelButton;
+
+    public Button okButton;
+
+    public Text cancelButtonLabel;
+
+    public Text okButtonLabel;
+
+    private static GameObject prefab;
+
+    private System.Action cancelButtonDelegate;
+
+    private System.Action okButtonDelegate;
+    //정답 다음에 띄울 캔버스 창
+    public GameObject SuccessObject;
+    //틀린 다음에 띄울 캔버스 창
+    public GameObject FailedObject;
+    //현재 캔버스 창
+    public GameObject owncanvas;
+
+    
+
+
+    public void SuccessActive()
+    {
+        SuccessObject.SetActive(true);
+        owncanvas.SetActive(false);
+
+    }
+    public void FaileActive()
+    {
+        FailedObject.SetActive(true);
+        owncanvas.SetActive(false);
+    }
+    
+    public static AlertViewController Show(
+        string title, string message, AlertViewOptions options = null)
+    {
+        if(prefab == null)
+        {
+            prefab = Resources.Load("AlertView") as GameObject;
+        }
+
+        GameObject go = Instantiate(prefab) as GameObject;
+        AlertViewController alertView = go.GetComponent<AlertViewController>();
+        alertView.UpdateContent(title, message, options);
+
+        return alertView;
+    }
+    
+
+
+    public void UpdateContent(
+        string title, string meassage, AlertViewOptions options = null)
+    {
+
+        titleLabel.text = title;
+        messageLabel.text = meassage;
+
+        if(options != null)
+        {
+            cancelButton.transform.gameObject.SetActive(
+                options.cancelButtonTitle != null || options.okButtonTitle != null);
+
+            cancelButton.gameObject.SetActive(options.cancelButtonTitle != null);
+            cancelButtonLabel.text = options.cancelButtonTitle ?? "";
+            cancelButtonDelegate = options.cancelButtonDelegate;
+
+            okButton.gameObject.SetActive(options.okButtonTitle != null);
+            okButtonLabel.text = options.okButtonTitle ?? "";
+            okButtonDelegate = options.okButtonDelegate;
+        }
+        else
+        {
+            cancelButton.gameObject.SetActive(false);
+            okButton.gameObject.SetActive(true);
+            okButtonLabel.text = "OK";
+
+        }
+
+  
+
+    }
+
+
+    public void Dismiss()
+    {
+        Destroy(gameObject);
+
+    }
+
+
+
+    public void OnPressCancelButton()
+    {
+        if(cancelButtonDelegate != null)
+        {
+            cancelButtonDelegate.Invoke();
+        }
+        Dismiss();
+
+    }
+
+    public void OnPressOKButton()
+    {
+        if(okButtonDelegate != null)
+        {
+            okButtonDelegate.Invoke();
+        }
+
+        Dismiss();
+       
+    }
+}
+
+
+
