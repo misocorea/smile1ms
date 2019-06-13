@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+
+public class PopManager : MonoBehaviour
+{
+
+   
+    //캔버스 삽입구
+    public GameObject canvasObject;
+
+    public delegate void CanvasDelegate();
+    public CanvasDelegate canvasDelegate = null;
+
+    
+
+
+    //시작시 캔버스 비활성화
+    void Start()
+    {
+
+       
+        canvasObject.SetActive(false);
+
+        
+    }
+
+
+   
+    //따옴표 안에 움직일 플레이어 태그를 넣으세요
+        //퀴즈박스 충돌 시 캔버스가 활성화 됩니다
+        public void OnTriggerEnter(Collider col)
+        {
+            if (col.gameObject.tag == "crush")
+            {
+                canvasObject.SetActive(true);
+                canvasDelegate();
+
+
+
+            }
+
+
+        }
+        //퀴즈박스에서 떨어질 시 캔버스가 비활성화 됩니다
+        public void OnTriggerExit(Collider col)
+        {
+            if (col.gameObject.tag == "crush")
+            {
+                canvasObject.SetActive(false);
+            }
+        }
+
+
+        //이벤트 콜백 함수
+
+        public void SetCallback(CanvasDelegate cal)
+        {
+            canvasDelegate = cal;
+        
+        }
+
+   
+
+
+
+    
+   
+}
