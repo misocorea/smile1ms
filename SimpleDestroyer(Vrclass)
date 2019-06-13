@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class DestroyOptions
+{
+    public string closeButtonTitle;
+    public System.Action closeButtonDelegate;
+}
+
+public class SimpleDestroyer : MonoBehaviour {
+
+
+    //닫힘버튼 삽입
+    public Button closeButton;
+
+    private System.Action closeButtonDelegate;
+
+    //캔버스 오브젝트를 파괴합니다
+    public void OnClose()
+    {
+        Destroy(gameObject);
+    }
+
+    public void OnPressCloseButton()
+    {
+        if(closeButtonDelegate != null)
+        {
+            closeButtonDelegate.Invoke();
+        }
+        OnClose();
+    }
+
+
+
+
+
+
+
+
+}
+
