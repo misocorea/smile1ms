@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class change_state : globalFlock
+{
+
+
+    
+        // Start is called before the first frame update
+       public  void state_change()
+        {
+            for (int j = 0; j < 10; j++)
+                allFish[j].SetActive(true);
+        }
+
+
+   
+
+
+}
