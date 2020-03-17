@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class talk01 : MonoBehaviour {
+    int talkCnt = 6;       // 대화의 총 갯수를 설정해줍니다.
+    int strCnt = 0;         // 이 변수가 하나씩 커져가면서 대화를 진행합니다.
+    string[] talk;          // 대화 내용을 저장할 공간입니다.
+    public Text txt;        // Text 오브젝트에 접근하기
+    public Image showText;
+    int []showCnt;
+	// Use this for initialization
+	void Start () {
+        talk = new string[talkCnt]; // 대화 저장 공간을 초기화해줍니다.
+        showCnt = new int[talkCnt];
+        txt = GameObject.Find("talk").transform.Find("Text").GetComponent<Text>();
+        // 캔버스 오브젝트 아래 자식 오브젝트로 있는 Text를 호출합니다.
+        showText = GameObject.Find("talk").transform.Find("talkScreen").GetComponent<Image>();
+        // 캔버스 오브젝트 아래 자식 오브젝트로 있는 talkScreen을 호출합니다.
+
+       
+
+        initialized();      // 대화를 설정하는 함수입니다.
+        
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Jump"))
+        {
+            strCnt++;
+            // '엔터'나 '스페이스바'를 누르면 카운트가 올라갑니다.
+        }
+        showAll();  // 화면에 나오게 하는 함수로 연ㅋ결ㅋ
+    }
+    void showAll()
+    {
+        showText.gameObject.SetActive(true);
+       
+       
+        txt.text = talk[strCnt];
+        // strCnt의 차례에 맞춰 대화를 출력합니다.
+    }
+
+    void initialized()
+    {
+        // 대화 내용을 하나하나 추가합니다.
+        talk[0] = "여기가 원전 폭발이 일어난 장소인가....";                    
+      
+        talk[1] = "여기 오기 전에 지침서를 받았는데 확인해볼까?";
+        talk[2] = "조사구역에는 위험물질이 있을 수도 있으니 함부로 접근하면 안된다";
+        talk[3] = "이곳에 방사능 돌연변이 개체를 발견했다는 소식이 들어왔다";
+        talk[4] = "나는 이곳에서 그 개체를 조사하는 임무를 맡았다";
+        talk[5] = "약간 머리가 어지러운 것 같다 아무래도 방사능 영향으로 평형감각이 바뀐 듯하다(ENTER을 클릭하자)";
+        ////////////////////////////////////////
+
+       
+    }
+}
